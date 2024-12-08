@@ -27,7 +27,7 @@ const Icon = (props: Props): JSX.Element | null =>{
     return null
   }
   return (
-    <CustomIcon name={name} size={size} color='color' />
+    <CustomIcon name={name} size={size} color={color} />
   )
 }
 
