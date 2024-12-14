@@ -1,13 +1,24 @@
 import {
   View, TextInput, KeyboardAvoidingView, StyleSheet
 } from 'react-native'
+import { collection, addDoc } from 'firebase/firestore'
+import { router } from 'expo-router'
 
 import CircleButton from '../../components/CircleButton'
 import Icon from '../../components/Icon'
-import { router } from 'expo-router'
+import { db } from '../../config'
 
 const handlePress = ():void => {
-  router.back()
+  addDoc(collection(db,'memos'),{
+    bodyText: 'test'
+  })
+    .then((docRef) => {
+      console.log('success',docRef.id)
+      router.back()
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const Create = ():JSX.Element => {
