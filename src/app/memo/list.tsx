@@ -15,7 +15,7 @@ const handlePress = ():void => {
 }
 
 const List = ():JSX.Element => {
-  const [memos,setMemos] = useState([])
+  const [memos,setMemos] = useState<Memo[]>([])
   //headerの右側に文字
   const navigation = useNavigation()
   useEffect(() => {
@@ -28,7 +28,7 @@ const List = ():JSX.Element => {
     const ref = collection(db,`users/${auth.currentUser.uid}/memos`)
     const q = query(ref,orderBy('updatedAt','desc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const remoteMemos = []
+      const remoteMemos: Memo[] = []
       snapshot.forEach((doc) => {
         console.log('memo', doc.data())
         const {bodyText, updatedAt} = doc.data()
@@ -45,9 +45,7 @@ const List = ():JSX.Element => {
   return (
     <View style = {styles.container}>
       <View>
-        <MemoListItem />
-        <MemoListItem />
-        <MemoListItem />
+        {memos.map((memo,id) => <MemoListItem key ={id} memo = {memo} />)}
       </View>
       <CircleButton onPress={handlePress}>
         <Icon name='plus' size={40} color="#FFF"/>
